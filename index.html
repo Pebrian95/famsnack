@@ -1,279 +1,45 @@
-import { useState } from "react";
-import { Button } from "/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "/components/ui/card";
-import { Input } from "/components/ui/input";
-import { Label } from "/components/ui/label";
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cireng Emoy - Jualan Cireng Enak</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cireng Emoy</h1>
+            <p>Cireng Enak, Gurih, dan Lezat!</p>
+        </header>
 
-export default function CirengLandingPage() {
-  const [quantity, setQuantity] = useState(1);
+        <section class="product">
+            <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80" alt="Cireng Emoy" />
+            <h2>Cireng Emoy Spesial</h2>
+            <p>Cireng khas Bandung dengan bumbu rahasia, cocok untuk cemilan dan teman ngopi.</p>
+            <p class="price">Harga: Rp15.000 / porsi</p>
+        </section>
 
-  const handleWhatsAppOrder = (productName: string, price: number) => {
-    const message = `Halo! Saya ingin memesan ${quantity} porsi ${productName} dengan total Rp ${price * quantity}.`;
-    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  };
+        <section class="order">
+            <h3>Pesan Sekarang!</h3>
+            <?php
+                // Nomor WhatsApp tujuan (gunakan format internasional tanpa tanda +, contoh: 6281234567890)
+                $whatsapp_number = "6281234567890";
 
-  const products = [
-    {
-      id: 1,
-      name: "Cireng Original",
-      description: "Cireng gurih dengan bumbu tradisional, renyah di luar lembut di dalam",
-      price: 15000,
-      imageAlt: "Cireng original goreng keemasan dengan tekstur renyah dan taburan bumbu"
-    },
-    {
-      id: 2,
-      name: "Cireng Keju",
-      description: "Cireng dengan isian keju mozzarella lumer, cocok untuk pecinta keju",
-      price: 20000,
-      imageAlt: "Cireng keju meleleh dengan taburan keju parut dan saus spesial"
-    },
-    {
-      id: 3,
-      name: "Cireng Pedas",
-      description: "Cireng dengan level pedas yang bisa disesuaikan, dari medium sampai extra hot",
-      price: 18000,
-      imageAlt: "Cireng pedas dengan sambal merah dan taburan cabai kering"
-    }
-  ];
+                // Pesan default yang akan dikirim
+                $message = urlencode("Halo Cireng Emoy, saya ingin pesan Cireng Spesial.");
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground py-4">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold">CirengKu</h1>
-            <nav className="hidden md:flex space-x-6">
-              <a href="#menu" className="hover:text-accent transition-colors">Menu</a>
-              <a href="#about" className="hover:text-accent transition-colors">Tentang</a>
-              <a href="#testimoni" className="hover:text-accent transition-colors">Testimoni</a>
-              <a href="#contact" className="hover:text-accent transition-colors">Kontak</a>
-            </nav>
-          </div>
-        </div>
-      </header>
+                // Link WhatsApp
+                $whatsapp_link = "https://wa.me/$whatsapp_number?text=$message";
+            ?>
+            <a href="<?php echo $whatsapp_link; ?>" target="_blank" class="btn-whatsapp">
+                Pesan via WhatsApp
+            </a>
+        </section>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4">Cireng Terlezat di Kota</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Nikmati kelezatan cireng homemade dengan berbagai varian rasa yang menggugah selera
-          </p>
-          <Button 
-            size="lg" 
-            className="bg-accent text-accent-foreground hover:bg-accent/90"
-            onClick={() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Lihat Menu
-          </Button>
-        </div>
-      </section>
-
-      {/* Products Section */}
-      <section id="menu" className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Menu Andalan Kami</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <Card key={product.id} className="overflow-hidden">
-                <div className="h-48 overflow-hidden">
-                  <img 
-                    src="https://placehold.co/400x300" 
-                    alt={product.imageAlt}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-foreground">{product.name}</CardTitle>
-                  <CardDescription>{product.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-primary">Rp {product.price.toLocaleString('id-ID')}</span>
-                    <div className="flex items-center space-x-2">
-                      <Label htmlFor={`quantity-${product.id}`} className="text-foreground">Jumlah:</Label>
-                      <Input
-                        id={`quantity-${product.id}`}
-                        type="number"
-                        min="1"
-                        value={quantity}
-                        onChange={(e) => setQuantity(Number(e.target.value))}
-                        className="w-20"
-                      />
-                    </div>
-                  </div>
-                  <Button 
-                    className="w-full bg-green-600 hover:bg-green-700 text-white"
-                    onClick={() => handleWhatsAppOrder(product.name, product.price)}
-                  >
-                    <span className="mr-2">💬</span>
-                    Pesan via WhatsApp
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Galeri Cireng Kami</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="overflow-hidden rounded-lg">
-              <img 
-                src="https://placehold.co/300x300" 
-                alt="Cireng original fresh dari penggorengan dengan tekstur crispy"
-                className="w-full h-48 object-cover hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="overflow-hidden rounded-lg">
-              <img 
-                src="https://placehold.co/300x300" 
-                alt="Cireng keju dengan lelehan keju yang menggoda"
-                className="w-full h-48 object-cover hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="overflow-hidden rounded-lg">
-              <img 
-                src="https://placehold.co/300x300" 
-                alt="Proses pembuatan cireng tradisional dengan bahan-bahan segar"
-                className="w-full h-48 object-cover hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="overflow-hidden rounded-lg">
-              <img 
-                src="https://placehold.co/300x300" 
-                alt="Kemasan cireng modern dan higienis untuk dibawa pulang"
-                className="w-full h-48 object-cover hover:scale-105 transition-transform"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimoni" className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Testimoni Pelanggan</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardContent className="pt-6">
-                <p className="text-muted-foreground italic mb-4">
-                  "Cirengnya enak banget! Renyah di luar, lembut di dalam. Sudah langganan seminggu 3x!"
-                </p>
-                <p className="font-semibold text-foreground">- Rina, Pelanggan Setia</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <p className="text-muted-foreground italic mb-4">
-                  "Pelayanan cepat dan ramah. Cireng kejunya juara, kejunya lumer dan banyak!"
-                </p>
-                <p className="font-semibold text-foreground">- Budi, Pecinta Keju</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <p className="text-muted-foreground italic mb-4">
-                  "Level pedasnya pas banget! Cocok untuk yang suka pedas tapi tidak terlalu ekstrim."
-                </p>
-                <p className="font-semibold text-foreground">- Sari, Penggemar Pedas</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <img 
-                src="https://placehold.co/600x400" 
-                alt="Dapur produksi cireng yang bersih dan modern dengan peralatan profesional"
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-            <div>
-              <h2 className="text-3xl font-bold mb-6 text-foreground">Tentang CirengKu</h2>
-              <p className="text-muted-foreground mb-4">
-                CirengKu hadir dengan cita rasa autentik dan kualitas terbaik. Kami menggunakan bahan-bahan 
-                pilihan dan proses pembuatan yang higienis untuk memastikan setiap gigitan memberikan 
-                pengalaman makan yang memuaskan.
-              </p>
-              <p className="text-muted-foreground mb-4">
-                Setiap cireng dibuat dengan penuh cinta dan perhatian terhadap detail. Dari pemilihan 
-                tepung hingga bumbu rempah, semuanya kami olah dengan teknik khusus untuk menghasilkan 
-                tekstur dan rasa yang sempurna.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mt-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">100%</div>
-                  <div className="text-muted-foreground">Bahan Alami</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">30+</div>
-                  <div className="text-muted-foreground">Pelanggan Harian</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">4.9/5</div>
-                  <div className="text-muted-foreground">Rating</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">15min</div>
-                  <div className="text-muted-foreground">Waktu Tunggu</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-16 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Siap Menikmati Cireng Kami?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Pesan sekarang melalui WhatsApp dan nikmati kelezatan cireng dalam hitungan menit!
-          </p>
-          <Button 
-            size="lg" 
-            className="bg-accent text-accent-foreground hover:bg-accent/90"
-            onClick={() => handleWhatsAppOrder("Paket Cireng", 0)}
-          >
-            <span className="mr-2">💬</span>
-            Hubungi Kami via WhatsApp
-          </Button>
-          
-          <div className="mt-12 grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="font-semibold mb-2">Lokasi</h3>
-              <p className="text-muted-foreground">Jalan Cireng Raya No. 123, Jakarta</p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">Jam Operasional</h3>
-              <p className="text-muted-foreground">Setiap Hari<br />10:00 - 22:00 WIB</p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">Kontak</h3>
-              <p className="text-muted-foreground">0812-3456-7890<br />cirengku@email.com</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-foreground text-background py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2024 CirengKu. All rights reserved.</p>
-          <p className="text-muted-foreground mt-2">Cita Rasa Autentik dalam Setiap Gigitan</p>
-        </div>
-      </footer>
+        <footer>
+            <p>&copy; <?php echo date("Y"); ?> Cireng Emoy. All rights reserved.</p>
+        </footer>
     </div>
-  );
-}
+</body>
+</html>
