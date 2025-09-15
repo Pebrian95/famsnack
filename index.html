@@ -41,8 +41,43 @@
             <p>&copy; <?php echo date("Y"); ?> Cireng Emoy. All rights reserved.</p>
         </footer>
     </div>
+      <div class="container">
+        <header>
+            <h1>Cireng Emoy</h1>
+            <p>Cireng Enak, Gurih, dan Lezat!</p>
+        </header>
+
+        <section class="product">
+            <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80" alt="Cireng Emoy" />
+            <h2>Cireng Emoy Spesial</h2>
+            <p>Cireng khas Bandung dengan bumbu rahasia, cocok untuk cemilan dan teman ngopi.</p>
+            <p class="price">Harga: Rp15.000 / porsi</p>
+        </section>
+
+        <section class="order">
+            <h3>Pesan Sekarang Juga!</h3>
+            <?php
+                // Nomor WhatsApp tujuan (gunakan format internasional tanpa tanda +, contoh: 6281234567890)
+                $whatsapp_number = "6281234567890";
+
+                // Pesan default yang akan dikirim
+                $message = urlencode("Halo Cireng Emoy, saya ingin pesan Cireng Spesial.");
+
+                // Link WhatsApp
+                $whatsapp_link = "https://wa.me/6281380637870";
+            ?>
+            <a href="<?php echo $whatsapp_link; ?>" target="_blank" class="btn-whatsapp">
+                Pesan via WhatsApp
+            </a>
+        </section>
+
+        <footer>
+            <p>&copy; <?php echo date("Y"); ?> Cireng Emoy. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
+
 
 
 
